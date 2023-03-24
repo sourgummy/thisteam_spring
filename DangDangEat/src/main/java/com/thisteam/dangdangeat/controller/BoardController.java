@@ -404,6 +404,7 @@ public class BoardController {
 		
 	}
 	
+	// 리뷰 작성
 	@PostMapping(value = "ReviewWritePro")
 	public String reviewWritePro(
 			@ModelAttribute ReviewVO review
