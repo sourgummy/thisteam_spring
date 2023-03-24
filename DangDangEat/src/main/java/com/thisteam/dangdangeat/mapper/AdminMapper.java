@@ -22,6 +22,9 @@ public interface AdminMapper {
 	// 회원 삭제
 	int deleteMember(MemberVO member);
 	
+	// 리뷰 파일 조회
+	String selectRealFile(int review_code);
+	
 	// 리뷰 삭제
 	int deleteReview(ReviewVO review);
 	
@@ -72,6 +75,8 @@ public interface AdminMapper {
 	
 	// 관리자 - 주문 관리 페이지
 	List<AdminOrderListVO> selectOrderList();
+
+
 
   
 //============================ admin/orderList 미주 ===========================================

@@ -34,7 +34,12 @@ public class AdminService {
 	public int memberDelete(MemberVO member) {
 		return mapper.deleteMember(member);
 	}
-  
+	
+	// 리뷰 파일 조회
+	public String getRealFile(int review_code) {
+		return mapper.selectRealFile(review_code);
+	}
+	
 	// 리뷰 삭제
 	public int reviewDelete(ReviewVO review) {
 		return mapper.deleteReview(review);
@@ -121,7 +126,7 @@ public class AdminService {
 		return mapper.selectOrderList();
 	}
 
-	
+
 
 //============================ admin/orderList 미주 ===========================================	
 

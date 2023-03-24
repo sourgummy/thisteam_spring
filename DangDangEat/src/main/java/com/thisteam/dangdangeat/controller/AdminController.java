@@ -3,6 +3,8 @@ package com.thisteam.dangdangeat.controller;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -276,217 +278,239 @@ public class AdminController {
 			ReviewVO review = new ReviewVO();
 			review.setReview_code(review_code);
 
+			// 주의! 삭제 전 해당 게시물의 파일명 조회 위해
+			// Service 객체의 getRealFile() 메서드를 호출
+			// => 파라미터 : 글번호    리턴타입 : String(realFile)
+			String realFile = service.getRealFile(review_code);
+//	        System.out.println(realFile);
+
 			// 리뷰 삭제 수행
 			int deleteCount = 0;
 			deleteCount = service.reviewDelete(review);
 
 			if(deleteCount > 0) { // 리뷰 삭제 성공
-//				String uploadDir = "/resources/upload"; // 가상의 업로드 경로(루트(webapp) 기준)
-//				String saveDir = session.getServletContext().getRealPath(uploadDir);
-//
-//				Path path = Paths.get(saveDir + "/" + fileName);
-//				Files.deleteIfExists(path);
-//
-//				response.getWriter().print("true");
-//			} else { // 삭제 실패
-//				response.getWriter().print("false");
-//			}
+//				 // 파일명을 "/" 문자열 기준으로 분리 후 for문 반복을 통해 해당 파일 삭제
+//	            String[] arrRealFile = realFile.split("/");
+//	            for(String fileName : arrRealFile) {
+//	               System.out.println(fileName);
+//	            }
+
+				for(String fileName : realFile.split("/")) {
+					String uploadDir = "/resources/upload"; // 가상의 업로드 경로(루트(webapp) 기준)
+					String saveDir = session.getServletContext().getRealPath(uploadDir);
+
+//	               File f = new File(saveDir, fileName);
+//	               // 해당 파일이 존재할 경우 삭제
+//	               if(f.exists()) {
+//	                  f.delete();
+//	               }
+					// --------------- java.nio 패키지(Files, Path, Paths) 객체 활용 -----------------
+					// 1. Paths.get() 메서드를 호출하여 대상 파일에 대한 Path 객체 얻어오기
+					Path path = Paths.get(saveDir + "/" + fileName);
+					// 2. Files 클래스의 deleteIfExists() 메서드를 호출하여 지정된 파일 삭제하기
+					try {
+						Files.deleteIfExists(path);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					// -------------------------------------------------------------------------------
+				}
 
 
-			//			   return "redirect:AdminBoardList";
-			return "redirect:ProductDetail.pd?pro_code=" + pro_code;
-		} else {
-			model.addAttribute("msg", "회원 삭제 실패!");
-			return "fail_back";
+				//			   return "redirect:AdminBoardList";
+				return "redirect:ProductDetail.pd?pro_code=" + pro_code;
+			} else {
+				model.addAttribute("msg", "리뷰 삭제 실패!");
+				return "fail_back";
+			}
+
 		}
 
 	}
 
-}
 
 
+	// ============================================== hawon ================================================
 
-// ============================================== hawon ================================================
-
-//관리자 쿠폰등록 view페이지
-@GetMapping(value = "AdminCouponRegister")
-public String CouponRegister() {
-	return "admin/admin_couponRegister";
-}
-
-//관리자 쿠폰등록페이지_쿠폰코드 중복인지 확인
-@GetMapping (value = "/CheckExistCouponCode")
-@ResponseBody
-public void CheckExistCouponCode(String cp_code,HttpServletResponse response) {
-	boolean isExist = service.isExistCode(cp_code);
-	int result = isExist == true ? 1 : 0;
-	//		System.out.println("isExist : "+isExist + " /  result : "+result);
-	try {
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().println(result);
-	} catch (IOException e) {
-		e.printStackTrace();
+	//관리자 쿠폰등록 view페이지
+	@GetMapping(value = "AdminCouponRegister")
+	public String CouponRegister() {
+		return "admin/admin_couponRegister";
 	}
 
-
-}
-//쿠폰 등록 비지니스 작업
-@PostMapping(value = "/CouponRegisterPro")
-public String CouponRegister(CouponVO coupon, String coupon_target, Model model) {
-
-	//쿠폰타겟(Cp_target)에 따라서 DB에 저장되는 쿼리가 다름
-	if(coupon_target == null) {
-		coupon.setCp_target(Cp_target.event);
-	}else {
-		coupon.setCp_target(Cp_target.valueOf(coupon_target));
-	}
-
-
-	//자동발급쿠폰일 경우: 쿠폰시작일:null
-	if(coupon.getCp_target() == Cp_target.new_member || coupon.getCp_target()  == Cp_target.birth  ) {
-		System.out.println("자동 발급 쿠폰 !");
-		coupon.setCp_startdate(""); // 쿠폰시작일:nullString
-
-	}
-	try {
-		int insertCount = service.registerCoupon(coupon);
-
-		//생일쿠폰일 경우
-		if(coupon.getCp_target()  == Cp_target.birth) {	
-			System.out.println("생일쿠폰 !");
-
-			//전 회원에게 생일쿠폰 발급 작업
-			service.registerBirthCouponToMc(coupon.getCp_code());
-			//				System.out.println("생일쿠폰발급 BirthCouponInsertCount :" + service.registerBirthCouponToMc(coupon.getCp_code()));
+	//관리자 쿠폰등록페이지_쿠폰코드 중복인지 확인
+	@GetMapping (value = "/CheckExistCouponCode")
+	@ResponseBody
+	public void CheckExistCouponCode(String cp_code,HttpServletResponse response) {
+		boolean isExist = service.isExistCode(cp_code);
+		int result = isExist == true ? 1 : 0;
+		//		System.out.println("isExist : "+isExist + " /  result : "+result);
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if(insertCount > 0) {
-			model.addAttribute("msg", "쿠폰이 등록되었습니다.");
-			model.addAttribute("url", "/AdminCouponList");
+
+
+	}
+	//쿠폰 등록 비지니스 작업
+	@PostMapping(value = "/CouponRegisterPro")
+	public String CouponRegister(CouponVO coupon, String coupon_target, Model model) {
+
+		//쿠폰타겟(Cp_target)에 따라서 DB에 저장되는 쿼리가 다름
+		if(coupon_target == null) {
+			coupon.setCp_target(Cp_target.event);
 		}else {
+			coupon.setCp_target(Cp_target.valueOf(coupon_target));
+		}
+
+
+		//자동발급쿠폰일 경우: 쿠폰시작일:null
+		if(coupon.getCp_target() == Cp_target.new_member || coupon.getCp_target()  == Cp_target.birth  ) {
+			System.out.println("자동 발급 쿠폰 !");
+			coupon.setCp_startdate(""); // 쿠폰시작일:nullString
+
+		}
+		try {
+			int insertCount = service.registerCoupon(coupon);
+
+			//생일쿠폰일 경우
+			if(coupon.getCp_target()  == Cp_target.birth) {	
+				System.out.println("생일쿠폰 !");
+
+				//전 회원에게 생일쿠폰 발급 작업
+				service.registerBirthCouponToMc(coupon.getCp_code());
+				//				System.out.println("생일쿠폰발급 BirthCouponInsertCount :" + service.registerBirthCouponToMc(coupon.getCp_code()));
+			}
+			if(insertCount > 0) {
+				model.addAttribute("msg", "쿠폰이 등록되었습니다.");
+				model.addAttribute("url", "/AdminCouponList");
+			}else {
+				model.addAttribute("msg", "일시적인 오류로 등록에 실패했습니다.");
+				model.addAttribute("url", "/AdminCouponRegister");
+			}
+
+		}catch (DataIntegrityViolationException e) {
+			// SQLIntegrityConstraintViolationException 예외처리
+
+			logger.error("exception msg: {}  ",e);
 			model.addAttribute("msg", "일시적인 오류로 등록에 실패했습니다.");
 			model.addAttribute("url", "/AdminCouponRegister");
 		}
 
-	}catch (DataIntegrityViolationException e) {
-		// SQLIntegrityConstraintViolationException 예외처리
-
-		logger.error("exception msg: {}  ",e);
-		model.addAttribute("msg", "일시적인 오류로 등록에 실패했습니다.");
-		model.addAttribute("url", "/AdminCouponRegister");
+		return "redirect";
 	}
 
-	return "redirect";
-}
-
-@GetMapping(value = "AdminCouponList")
-public String AdminCouponList(Model model) {
-	// admin_couponList.jsp에서 보여질 쿠폰 리스트 JSONArray형태로 request객체에 저장
-	List<Coupon_viewVO> CouponList =  odService.selectCouponList();
-	JSONArray CouponListJson = new JSONArray();
-	for(Coupon_viewVO coupon : CouponList) {
-		CouponListJson.put(new JSONObject(coupon));
-	}
-	System.out.println("CouponListJson :  "+ CouponListJson);
-	model.addAttribute("CouponList", CouponListJson);
-
-	// 쿠폰 개수 리턴받음
-	int couponCount = odService.getCouponTotalAmount();
-	model.addAttribute("couponCount", couponCount);
-
-
-
-	return "admin/admin_couponList";
-}
-
-
-
-
-
-@GetMapping(value = "/CouponUpdate" )// ajax요청 서블릿- 쿠폰수정
-@ResponseBody
-public void CouponUpdate(HttpSession session, 
-		Coupon_viewVO couponVO, 
-		HttpServletResponse response){
-	//쿠폰수정 가능 항목 - 쿠폰명, 유효기간, 최소적용금액, 최대할인액
-	System.out.println("coupon 쿠폰수정  : "+ couponVO);
-
-	//수정 비지니스로직
-	int updateCount =  service.updateCoupon(couponVO);
-
-	//수정 결과 판별
-	if(updateCount > 0) {
-		//수정 후 Coupon_viewVO객체 가져오기
-		Coupon_viewVO coupon = service.getCoupon(couponVO.getCp_code());
-
-		//JSONObject으로 변경해서 ResponseBody로 보내기
-		try {
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().println(new JSONObject(coupon));
-		} catch (IOException e) {
-			e.printStackTrace();
+	@GetMapping(value = "AdminCouponList")
+	public String AdminCouponList(Model model) {
+		// admin_couponList.jsp에서 보여질 쿠폰 리스트 JSONArray형태로 request객체에 저장
+		List<Coupon_viewVO> CouponList =  odService.selectCouponList();
+		JSONArray CouponListJson = new JSONArray();
+		for(Coupon_viewVO coupon : CouponList) {
+			CouponListJson.put(new JSONObject(coupon));
 		}
-	}else {
-		try {
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().println(false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println("CouponListJson :  "+ CouponListJson);
+		model.addAttribute("CouponList", CouponListJson);
+
+		// 쿠폰 개수 리턴받음
+		int couponCount = odService.getCouponTotalAmount();
+		model.addAttribute("couponCount", couponCount);
+
+
+
+		return "admin/admin_couponList";
 	}
 
 
-}
-//쿠폰 삭제
-@GetMapping(value = "/CouponDelete")
-public String CouponUpdate(String cp_code, Model model ) {
-	System.out.println("cp_code : " + cp_code);
 
 
-	//삭제 비지니스로직
-	try {
 
-		int deleteCount =  service.deleteCoupon(cp_code);
-		if(deleteCount > 0) {
-			model.addAttribute("msg", "삭제되었습니다.");
-			model.addAttribute("url", "/AdminCouponList");
+	@GetMapping(value = "/CouponUpdate" )// ajax요청 서블릿- 쿠폰수정
+	@ResponseBody
+	public void CouponUpdate(HttpSession session, 
+			Coupon_viewVO couponVO, 
+			HttpServletResponse response){
+		//쿠폰수정 가능 항목 - 쿠폰명, 유효기간, 최소적용금액, 최대할인액
+		System.out.println("coupon 쿠폰수정  : "+ couponVO);
+
+		//수정 비지니스로직
+		int updateCount =  service.updateCoupon(couponVO);
+
+		//수정 결과 판별
+		if(updateCount > 0) {
+			//수정 후 Coupon_viewVO객체 가져오기
+			Coupon_viewVO coupon = service.getCoupon(couponVO.getCp_code());
+
+			//JSONObject으로 변경해서 ResponseBody로 보내기
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().println(new JSONObject(coupon));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}else {
-			model.addAttribute("msg", "일시적인 오류로 삭제에 실패했습니다.");
-			model.addAttribute("url", "/AdminCouponList");
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().println(false);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
-	}catch (DataIntegrityViolationException e) {
-		// SQLIntegrityConstraintViolationException 예외처리
 
-		logger.error("exception msg: {}  ",e);
-		model.addAttribute("msg", "삭제에 실패했습니다. 지속적인 오류 발생시에 담당자에게 문의하세요.");
-		model.addAttribute("url", "/AdminCouponList");
 	}
-	return "redirect";
-}
+	//쿠폰 삭제
+	@GetMapping(value = "/CouponDelete")
+	public String CouponUpdate(String cp_code, Model model ) {
+		System.out.println("cp_code : " + cp_code);
 
-//============================ admin/orderList 미주 ===========================================
 
-// 관리자 - 주문 관리 페이지 
-@GetMapping(value = "AdminOrderList")
-public String OrderList(Model model, HttpSession session) {
+		//삭제 비지니스로직
+		try {
 
-	String id = (String)session.getAttribute("sId");
+			int deleteCount =  service.deleteCoupon(cp_code);
+			if(deleteCount > 0) {
+				model.addAttribute("msg", "삭제되었습니다.");
+				model.addAttribute("url", "/AdminCouponList");
+			}else {
+				model.addAttribute("msg", "일시적인 오류로 삭제에 실패했습니다.");
+				model.addAttribute("url", "/AdminCouponList");
+			}
 
-	if(id == null || id.equals("") || !id.equals("admin")) { 
-		model.addAttribute("msg", "잘못된 접근입니다!");
-		return "redirect:/";
-	} else { 
-		// 전체 주문 목록 조회
-		List<AdminOrderListVO> adminOrderList = service.getOrderList();
+		}catch (DataIntegrityViolationException e) {
+			// SQLIntegrityConstraintViolationException 예외처리
 
-		model.addAttribute("adminOrderList", adminOrderList);
-
-		return "admin/admin_orderList";
+			logger.error("exception msg: {}  ",e);
+			model.addAttribute("msg", "삭제에 실패했습니다. 지속적인 오류 발생시에 담당자에게 문의하세요.");
+			model.addAttribute("url", "/AdminCouponList");
+		}
+		return "redirect";
 	}
 
+	//============================ admin/orderList 미주 ===========================================
 
-}
-//============================ admin/orderList 미주 ===========================================
+	// 관리자 - 주문 관리 페이지 
+	@GetMapping(value = "AdminOrderList")
+	public String OrderList(Model model, HttpSession session) {
+
+		String id = (String)session.getAttribute("sId");
+
+		if(id == null || id.equals("") || !id.equals("admin")) { 
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "redirect:/";
+		} else { 
+			// 전체 주문 목록 조회
+			List<AdminOrderListVO> adminOrderList = service.getOrderList();
+
+			model.addAttribute("adminOrderList", adminOrderList);
+
+			return "admin/admin_orderList";
+		}
+
+
+	}
+	//============================ admin/orderList 미주 ===========================================
 
 
 }
