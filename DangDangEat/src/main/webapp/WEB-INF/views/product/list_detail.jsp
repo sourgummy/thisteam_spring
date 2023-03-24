@@ -4,6 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <% pageContext.setAttribute("replaceChar", "\n"); %>
+<%
+// 이미지 경로 저장
+String imgSrc = request.getScheme()+"://"+request.getServerName() + ":" + request.getServerPort() +"/"+request.getContextPath();
+pageContext.setAttribute("imgSrc", imgSrc);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,11 +181,19 @@
 						result += "<td></td>";
 						<c:choose>
 							<c:when test = "${sId eq 'admin' }">
-								result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
+								result += "<td colspan='2'>" + jsonArray[index].review_content + "</td>";
+								result += "<td>";
+								result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_file + "'"
+										+ "alt='...' onerror='this.src='" + ${pageContext.request.contextPath} + "/resources/img/sample1_thumb.png' />";
+								result += "</td>";
 								result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
 							</c:when>
 							<c:otherwise>
-								result += "<td colspan='4'>" + jsonArray[index].review_content + "</td>"
+								result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
+								result += "<td>";
+								result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_file + "'"
+										+ "alt='...' onerror='this.src='${pageContext.request.contextPath}/resources/img/sample1_thumb.png' />";
+								result += "</td>";
 							</c:otherwise>
 						</c:choose>
 						result += "</tr>";
@@ -235,7 +248,7 @@
 				
 // 				// 리뷰 작성 가능할 경우
 // 				if(result == "true") {
-					window.open("ReviewWrite?pro_code=" + ${product.pro_code}, "_blank", "width=880, height=650, top=50, left=1000");
+					window.open("ReviewWrite?pro_code=" + ${product.pro_code}, "_blank", "width=880, height=600, top=50, left=1000");
 // 				}
 // 			})
 // 			.fail(function() {

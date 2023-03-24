@@ -24,7 +24,7 @@ public class ReviewVO {
 
 	private int review_code;
 	private String member_id;
-	private String review_pass;
+//	private String review_pass; // 리뷰 비밀번호 삭제
 	private String review_subject;
 	private String review_content;
 	private String review_file;
@@ -53,12 +53,12 @@ public class ReviewVO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public String getReview_pass() {
-		return review_pass;
-	}
-	public void setReview_pass(String review_pass) {
-		this.review_pass = review_pass;
-	}
+//	public String getReview_pass() {
+//		return review_pass;
+//	}
+//	public void setReview_pass(String review_pass) {
+//		this.review_pass = review_pass;
+//	}
 	public String getReview_subject() {
 		return review_subject;
 	}
@@ -141,7 +141,7 @@ public class ReviewVO {
 	
 	@Override
 	public String toString() {
-		return "ReviewVO [review_code=" + review_code + ", member_id=" + member_id + ", review_pass=" + review_pass
+		return "ReviewVO [review_code=" + review_code + ", member_id=" + member_id 
 				+ ", review_subject=" + review_subject + ", review_content=" + review_content + ", review_file="
 				+ review_file + ", review_real_file=" + review_real_file + ", review_re_ref=" + review_re_ref
 				+ ", review_re_lev=" + review_re_lev + ", review_re_seq=" + review_re_seq + ", review_readcount="

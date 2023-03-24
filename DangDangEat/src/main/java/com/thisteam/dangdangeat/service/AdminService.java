@@ -39,6 +39,7 @@ public class AdminService {
 	public int reviewDelete(ReviewVO review) {
 		return mapper.deleteReview(review);
 	}
+	
   // ============================================== yeram ================================================
 	// Wish Top
 	public List<WishlistVO> getWishlistTop() {
