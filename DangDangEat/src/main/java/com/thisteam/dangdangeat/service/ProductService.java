@@ -47,6 +47,13 @@ public class ProductService {
 		return mapper.deleteProdDelete(product);
 	}
 
+
+	//=================HAWON==================
+	//새상품목록 가져오기
+	public List<ProductVO> getNewProduct(int numberOfProducts) {
+		return mapper.selectNewProduct(numberOfProducts);
+	}
+
 	
 
 }

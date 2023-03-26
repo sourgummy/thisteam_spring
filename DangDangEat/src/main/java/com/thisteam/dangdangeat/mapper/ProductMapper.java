@@ -37,6 +37,13 @@ public interface ProductMapper {
 	//6. 상품 삭제
 	int deleteProdDelete(ProductVO product);
 
+
+
+	//================HAWON====================
+	//메인에 보여질 새상품목록 가져오기
+	List<ProductVO> selectNewProduct(int numberOfProducts);
+
+
 	
 	
 

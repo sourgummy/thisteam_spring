@@ -141,6 +141,16 @@
 		WHERE
 			PRO_CODE = #{pro_code}
 	</delete>
+	<!-- ============== HAWON ============== -->
+	<!-- 새상품 목록 가져오기 (main)-->
+	<select id="selectNewProduct" resultType="com.thisteam.dangdangeat.vo.ProductVO">
+		SELECT  pro_code, pro_name, pro_thumb, pro_real_thumb 
+					FROM product 
+					 WHERE  pro_yn = 1
+					 ORDER BY pro_date DESC
+					 LIMIT #{numberOfProducts}
+	</select>
+
 	
 </mapper>
 

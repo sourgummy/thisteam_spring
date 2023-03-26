@@ -3,10 +3,12 @@ package com.thisteam.dangdangeat.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.thisteam.dangdangeat.service.OrderService;
 import com.thisteam.dangdangeat.service.ProductService;
 import com.thisteam.dangdangeat.vo.PageInfo;
 import com.thisteam.dangdangeat.vo.ProductVO;
@@ -264,6 +266,33 @@ public class ProductController {
 			
 		return "product/list_detail";
 	}	
+		
+		//===========================HAWON================================
+		@ResponseBody
+		@PostMapping(value = "/Main")
+		public void mainImg(HttpServletResponse response) {
+			
+			//가져올 상품 개수
+			int productCount = 5;
+			//최신 상품 리스트 가져오기
+			List<ProductVO> productList  = service.getNewProduct(productCount);
+			
+			//JSON데이터로 변환
+			JSONArray productJson = new JSONArray();
+			for(ProductVO product : productList ) {
+				productJson.put(new JSONObject(product));
+			}
+			
+			//body로 보내기
+			try {
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().print(productJson);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
 }
 
 

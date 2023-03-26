@@ -50,7 +50,7 @@ $(document).ready(function(){
 		
 		
 		$.ajax({
-			type:"get",
+			type:"post",
 			url:"Main",
 			dataType : 'json', 
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -215,12 +215,8 @@ cursor: pointer;
         <div class="mt-5 d-flex flex-row justify-content-center">
 	         <h3> NEW EAT </h3>
          </div>
-	        <div style="position:relative;" class=" mb-5 d-flex flex-row justify-content-center" id="new_eat">
-<%-- 		         <c:forEachCitems="${productList}" var="product" > --%>
-<%-- 		         ${product.pro_real_thumb } --%>
-<%-- 			       <img class=" bg-light main_rec m-3" src="<%=request.getSession().getServletContext().getRealPath(uploadPath) %>/${product.pro_real_thumb }"></img> --%>
-<%-- 		         </c:forEach> --%>
-
+        <!-- NEW EAT 신상품 목록 영역 -->
+        <div style="position:relative;" class=" mb-5 d-flex flex-row justify-content-center" id="new_eat">
 		</div>
 </article>
  
