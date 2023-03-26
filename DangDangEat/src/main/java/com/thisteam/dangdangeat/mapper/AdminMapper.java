@@ -8,6 +8,7 @@ import com.thisteam.dangdangeat.vo.AdminOrderListVO;
 import com.thisteam.dangdangeat.vo.CouponVO;
 import com.thisteam.dangdangeat.vo.Coupon_viewVO;
 import com.thisteam.dangdangeat.vo.MemberVO;
+import com.thisteam.dangdangeat.vo.QnaVO;
 import com.thisteam.dangdangeat.vo.ReviewVO;
 import com.thisteam.dangdangeat.vo.WishlistVO;
 
@@ -73,10 +74,18 @@ public interface AdminMapper {
 	// 관리자 - 주문 관리 페이지
 	List<AdminOrderListVO> selectOrderList();
 
+
   
 //============================ admin/orderList 미주 ===========================================
 
+//============================ admin/boardQnaList sangwoo =====================================
+
+	// 관리자 페이지 qna 리스트
+	List<QnaVO> selectQnaList();
+	
+//============================ admin/boardQnaList sangwoo =====================================
 }
+
 
 
 

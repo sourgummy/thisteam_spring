@@ -24,13 +24,13 @@ if(sId == null || !sId.equals("admin")) {
 <title>DangDangEAT - Admin Board</title>
 
 <!-- Custom fonts for this template -->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 <!-- Custom styles for this template -->
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 
 <!-- Custom styles for this page -->
-<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 <!-- 폰트 설정 -->
 <style>
@@ -130,7 +130,7 @@ font-family: 'GmarketSans';
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="AdminProductList">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-calendar"></i>
                     <span>상품 관리</span></a>
             </li>
             <!-- Nav Item - Tables -->
@@ -142,19 +142,19 @@ font-family: 'GmarketSans';
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="AdminOrderList">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-dollar-sign"></i>
                     <span>주문 관리</span></a>
             </li>
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="AdminCouponList">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-clipboard-list"></i>
                     <span>쿠폰 관리</span></a>
             </li>
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="AdminBoardList">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-comments"></i>
                     <span>게시판 관리</span></a>
             </li>
 
@@ -233,7 +233,7 @@ font-family: 'GmarketSans';
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 font-weight-bold">Admin</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/dangprofile.png">
+                                    src="${pageContext.request.contextPath}/resources/img/dangprofile.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -282,9 +282,7 @@ font-family: 'GmarketSans';
                                             <th>제목</th>
                                             <th>내용</th>
                                             <th>날짜</th>
-                                            <th>
-                                            
-                                    		</th>
+                                            <th>비고</th>
                                         </tr>
                                     </thead>
                                     <tfoot>                                        
@@ -297,13 +295,13 @@ font-family: 'GmarketSans';
 	                                            <td>${qna.qna_content }</td>
 	                                            <td>${qna.qna_date}</td>
 	                                            <td>
-	                                            	<span class="btn btn-info btn-circle btn-sm">
-				                                        <i class="fas fa-info-circle"></i>
-				                                    </span>
-				                                    <span class="btn btn-warning btn-circle btn-sm">
-				                                        <i class="fas fa-exclamation-triangle"></i>
-				                                    </span>
-				                                    <span class="btn btn-danger btn-circle btn-sm" onclick="confirmDelete('${member.member_id}')">
+<!-- 	                                            	<span class="btn btn-info btn-circle btn-sm"> -->
+<!-- 				                                        <i class="fas fa-info-circle"></i> -->
+<!-- 				                                    </span> -->
+<!-- 				                                    <span class="btn btn-warning btn-circle btn-sm"> -->
+<!-- 				                                        <i class="fas fa-exclamation-triangle"></i> -->
+<!-- 				                                    </span> -->
+				                                    <span class="btn btn-danger btn-circle btn-sm" onclick="confirmDelete('${qna.qna_code}')">
 				                                        <i class="fas fa-trash"></i>
 				                                    </span>
 	                                    		</td>
@@ -363,21 +361,21 @@ font-family: 'GmarketSans';
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
 
 </body>
 

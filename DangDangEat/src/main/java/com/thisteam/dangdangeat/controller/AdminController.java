@@ -30,6 +30,7 @@ import com.thisteam.dangdangeat.vo.Cp_target;
 import com.thisteam.dangdangeat.vo.MemberVO;
 import com.thisteam.dangdangeat.vo.PageInfo;
 import com.thisteam.dangdangeat.vo.ProductVO;
+import com.thisteam.dangdangeat.vo.QnaVO;
 import com.thisteam.dangdangeat.vo.ReviewVO;
 import com.thisteam.dangdangeat.vo.WishlistVO;
 
@@ -482,7 +483,21 @@ public class AdminController {
 		
 	}
 //============================ admin/orderList 미주 ===========================================
-
+//============================ admin/boardList sangwoo ========================================
+	
+	// 관리자 board 관리 페이지
+	@GetMapping(value = "AdminBoardList")
+	public String BoardList(@RequestParam(defaultValue = "") String keyword,
+							@RequestParam(defaultValue = "1") int pageNum,
+							Model model) {
+		
+		List<QnaVO> qnaList = service.getAdminQnaList();
+		
+		model.addAttribute("qnaList", qnaList);
+		
+		return "admin/admin_board";
+	}
+//============================ admin/boardList sangwoo ========================================
 
 }
 

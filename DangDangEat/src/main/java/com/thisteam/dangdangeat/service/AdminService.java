@@ -11,6 +11,7 @@ import com.thisteam.dangdangeat.vo.AdminOrderListVO;
 import com.thisteam.dangdangeat.vo.CouponVO;
 import com.thisteam.dangdangeat.vo.Coupon_viewVO;
 import com.thisteam.dangdangeat.vo.MemberVO;
+import com.thisteam.dangdangeat.vo.QnaVO;
 import com.thisteam.dangdangeat.vo.ReviewVO;
 import com.thisteam.dangdangeat.vo.WishlistVO;
 
@@ -120,11 +121,17 @@ public class AdminService {
 		return mapper.selectOrderList();
 	}
 
+
 	
 
 //============================ admin/orderList 미주 ===========================================	
-
+//============================ admin/boardList sangwoo ========================================
 	
+	// 관리자 페이지 qna 관리 페이지
+	public List<QnaVO> getAdminQnaList() {
+		return mapper.selectQnaList();
+	}
+//============================ admin/boardList sangwoo ========================================
 
 }
 

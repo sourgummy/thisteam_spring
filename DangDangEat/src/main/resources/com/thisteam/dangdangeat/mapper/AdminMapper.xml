@@ -156,7 +156,14 @@
   	</select>
   	
   	<!-- ============================ admin/orderList 미주 ===================== -->
-
+	
+	<!-- ============================ admin/boardList sangwwo ================== -->
+	
+	<select id="selectQnaList" resultType="com.thisteam.dangdangeat.vo.QnaVO">
+		SELECT * FROM qna
+	</select>
+	
+	<!-- ============================ admin/boardList sangwwo ================== -->
 </mapper>
 
 
