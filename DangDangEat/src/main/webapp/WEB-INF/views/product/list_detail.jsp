@@ -181,19 +181,28 @@ pageContext.setAttribute("imgSrc", imgSrc);
 						result += "<td></td>";
 						<c:choose>
 							<c:when test = "${sId eq 'admin' }">
-								result += "<td colspan='2'>" + jsonArray[index].review_content + "</td>";
-								result += "<td>";
-								result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_file + "'"
-										+ "alt='...' onerror='this.src='" + ${pageContext.request.contextPath} + "/resources/img/sample1_thumb.png' />";
-								result += "</td>";
-								result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
+								if(jsonArray[index].review_real_files != null) {
+									result += "<td colspan='2'>" + jsonArray[index].review_content + "</td>";
+									result += "<td>";
+									result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
+											+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' />";
+									result += "</td>";
+									result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
+								} else {
+									result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>";
+									result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
+								}
 							</c:when>
 							<c:otherwise>
-								result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
-								result += "<td>";
-								result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_file + "'"
-										+ "alt='...' onerror='this.src='${pageContext.request.contextPath}/resources/img/sample1_thumb.png' />";
-								result += "</td>";
+								if(jsonArray[index].review_real_files != null) {
+									result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
+									result += "<td>";
+									result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
+											+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' />";
+									result += "</td>";
+								} else {
+									result += "<td colspan='4'>" + jsonArray[index].review_content + "</td>";
+								}
 							</c:otherwise>
 						</c:choose>
 						result += "</tr>";

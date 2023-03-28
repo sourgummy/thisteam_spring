@@ -197,7 +197,7 @@
 					</otherwise>
 				</choose>
 				, #{member_id}
-				, #{review_pass}
+<!-- 				, #{review_pass} -->
 				, #{review_subject}
 				, #{review_content}
 				, #{review_file}

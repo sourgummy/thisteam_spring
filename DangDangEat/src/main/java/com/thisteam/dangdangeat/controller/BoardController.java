@@ -291,9 +291,18 @@ public class BoardController {
 		int listLimit = 5; // 한 페이지에서 표시할 게시물 목록을 7개로 제한
 		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호 계산
 
-		// 거래처 목록 가져오기
+		// 리뷰 목록 가져오기
 		List<ReviewVO> reviewList = service.getReviewList(pd, keyword, startRow, listLimit);
-
+		
+		for(ReviewVO review : reviewList) {
+			if(review.getReview_real_file() != null && !review.getReview_real_file().equals("")) {
+				// 리뷰 이미지 존재 시 가져오기
+				String[] splitFileNames = review.getReview_real_file().split("/");
+				review.setReview_real_files(splitFileNames);
+			}
+			
+		}
+		
 		// 페이징 처리 
 		//1. 검색어에 해당하는 거래처 정보(ClientVO)의 갯수 계산
 		int listCount = service.getReviewListCount(pd, keyword);
@@ -328,12 +337,17 @@ public class BoardController {
 		JSONArray jsonArray = new JSONArray();
 
 		for(ReviewVO review : reviewList) {
+			if(review.getReview_real_file() != null && !review.getReview_real_file().equals("")) { // 리뷰 이미지 가져오기
+				String[] splitFileNames = review.getReview_real_file().split("/");
+				review.setReview_real_files(splitFileNames);
+			}
+			
 			review.setReview_content(review.getReview_content().replace("\r\n", "<br>")); // 출력 시 줄바꿈 처리
 			System.out.println(review);
 			JSONObject jsonObject = new JSONObject(review);
 			System.out.println("리뷰 코드 : " + jsonObject.get("review_code"));
 
-			jsonArray.put(jsonObject); // jsonArray 객체에 ClientVO 객체 배열(clientList) 넣기
+			jsonArray.put(jsonObject); // jsonArray 객체에 ReviewVO 객체 배열(reviewList) 넣기
 		}
 
 		JSONObject jsonObjectPage = new JSONObject(pageInfo);
@@ -415,63 +429,77 @@ public class BoardController {
 		
 		System.out.println(review);
 		
-		String uploadDir = "/resources/upload"; //가상 업로드 위치 지정
-		String saveDir = session.getServletContext().getRealPath(uploadDir); //실제 업로드 위치 설정
-		System.out.println("실제 업로드 경로 : " + saveDir);
-		System.out.println("리뷰 vo :"+review);
+		// 세션 아이디 확인
+		String id = (String)session.getAttribute("sId");
 
-		// -------------- java.nio 패키지(Files, Path, Paths) 객체 활용 ---------------------------
-		Path path = Paths.get(saveDir); // 실제 업로드 경로 지정
-
-		try {
-			Files.createDirectories(path);//실제 지정된 업로드 경로에 디렉토리 생성
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		//----------------------------------------
-
-		MultipartFile[] mFiles = review.getFiles();// 파일 객체에 파일 넣기
-
-		String originalFileNames = "";//서버에 등록 될 파일 이름
-		String realFileNames = "";//실제 저장될 파일 이름
-
-		// 복수개의 파일에 접근하기 위한 반복문
-		for(MultipartFile mFile : mFiles) {
-			String originalFileName = mFile.getOriginalFilename();
-			if(!originalFileName.equals("")) {
-				// 파일명 중복 방지 대책
-				String uuid = UUID.randomUUID().toString();
-				System.out.println("업로드 될 파일명 : " + uuid + "_" + originalFileName);
-
-				// 파일명을 결합하여 보관할 변수에 하나의 파일 문자열 결합
-				originalFileNames += originalFileName + "/";
-				realFileNames += uuid + "_" + originalFileName + "/";
-			} else {
-				// 파일이 존재하지 않을 경우 널스트링으로 대체(뒤에 슬래시 포함)
-				originalFileNames += "/";
-				realFileNames += "/";
-			}
-		}
-
-		// productVO 객체에 원본 파일명과 업로드 될 파일명 저장
-		//		  image.setImage_main_file(originalFileNames);
-		review.setReview_file(originalFileNames); // original 파일이름
-		review.setReview_real_file(realFileNames); // 실제 파일 이름
-		System.out.println("원본 파일명 : " +review.getReview_file() );
-		System.out.println("업로드 될 파일명 : " + review.getReview_real_file());
-		
-		// 상품 리뷰 등록
-		int insertCount = service.registReview(review);
-		
-		if(insertCount > 0) { // 등록 성공
-			model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
-			model.addAttribute("url", "/ProductDetail.pd?pro_code=" + review.getPro_code());
+		if(id == null || id.equals("")) { // 세션 아이디가 null 이거나 "" 일 경우
+			model.addAttribute("msg", "로그인이 필요한 페이지입니다.");
+			model.addAttribute("url", "/MemberLoginForm");
 			
 			return "redirect";
-		} else { // 등록 실패
-			model.addAttribute("msg", "리뷰 등록에 실패하였습니다.");
-			return "fail_back";
+		} else { // 세션 아이디 있을 경우
+			review.setMember_id(id); // member_id 저장
+			
+			String uploadDir = "/resources/upload"; //가상 업로드 위치 지정
+			String saveDir = session.getServletContext().getRealPath(uploadDir); //실제 업로드 위치 설정
+			System.out.println("실제 업로드 경로 : " + saveDir);
+			System.out.println("리뷰 vo :" + review);
+			
+			// -------------- java.nio 패키지(Files, Path, Paths) 객체 활용 ---------------------------
+			Path path = Paths.get(saveDir); // 실제 업로드 경로 지정
+			
+			try {
+				Files.createDirectories(path);//실제 지정된 업로드 경로에 디렉토리 생성
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			//----------------------------------------
+			
+			MultipartFile[] mFiles = review.getFiles();// 파일 객체에 파일 넣기
+			
+			String originalFileNames = "";//서버에 등록 될 파일 이름
+			String realFileNames = "";//실제 저장될 파일 이름
+			
+			// 복수개의 파일에 접근하기 위한 반복문
+			for(MultipartFile mFile : mFiles) {
+				String originalFileName = mFile.getOriginalFilename();
+				if(!originalFileName.equals("")) {
+					// 파일명 중복 방지 대책
+					String uuid = UUID.randomUUID().toString();
+					System.out.println("업로드 될 파일명 : " + uuid + "_" + originalFileName);
+					
+					// 파일명을 결합하여 보관할 변수에 하나의 파일 문자열 결합
+					originalFileNames += originalFileName + "/";
+					realFileNames += uuid + "_" + originalFileName + "/";
+				} else {
+					// 파일이 존재하지 않을 경우 널스트링으로 대체(뒤에 슬래시 포함)
+					originalFileNames += "/";
+					realFileNames += "/";
+				}
+			}
+			
+			// productVO 객체에 원본 파일명과 업로드 될 파일명 저장
+//			image.setImage_main_file(originalFileNames);
+			review.setReview_file(originalFileNames); // original 파일이름
+			review.setReview_real_file(realFileNames); // 실제 파일 이름
+			System.out.println("원본 파일명 : " +review.getReview_file() );
+			System.out.println("업로드 될 파일명 : " + review.getReview_real_file());
+			
+			// 상품 리뷰 등록
+			int insertCount = service.registReview(review);
+			
+			if(insertCount > 0) { // 등록 성공
+				model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+				model.addAttribute("url", "/ProductDetail.pd?pro_code=" + review.getPro_code());
+				
+				return "redirect";
+			} else { // 등록 실패
+				model.addAttribute("msg", "리뷰 등록에 실패하였습니다.");
+				return "fail_back";
+			}
+			
 		}
+		
 	}
 	
 	

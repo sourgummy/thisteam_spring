@@ -180,6 +180,9 @@
                                         <div class="col col-md-3"><label for="files" class=" form-control-label font-weight-bold">상품 사진</label></div>
                                         <div class="col col-md-9">
                                             <input type="file" name="files" />
+                                            <input type="file" name="files" />
+                                            <input type="file" name="files" />
+                                            <small class="form-text text-muted">상품평 사진은 3개까지 추가 가능합니다.</small>
                                         </div>
                                     </div>
                             <div class="card-footer">
