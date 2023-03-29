@@ -205,6 +205,7 @@
 
        		 </div><!-- .animated -->
     	</div><!-- .content -->
+    </div>
 
     <div class="clearfix"></div>
 

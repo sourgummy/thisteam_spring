@@ -471,6 +471,25 @@ public class BoardController {
 					// 파일명을 결합하여 보관할 변수에 하나의 파일 문자열 결합
 					originalFileNames += originalFileName + "/";
 					realFileNames += uuid + "_" + originalFileName + "/";
+					
+					// 이미지 파일 생성
+					File img_f = new File(saveDir, uuid + "_" + originalFileName); 
+					try {
+						mFile.transferTo(img_f);
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+						
+					// 파일 경로가 존재하지 않을 경우 파일 경로 생성
+					if(!img_f.exists()) {
+						img_f.mkdirs();
+					}
+					// 이미지 파일 생성 끝
+					
 				} else {
 					// 파일이 존재하지 않을 경우 널스트링으로 대체(뒤에 슬래시 포함)
 					originalFileNames += "/";

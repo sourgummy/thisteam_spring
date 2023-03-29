@@ -7,6 +7,7 @@
 <%
 // 이미지 경로 저장
 String imgSrc = request.getScheme()+"://"+request.getServerName() + ":" + request.getServerPort() +"/"+request.getContextPath();
+// String imgSrc = "C:/Users/chz5k/Documents/workspace_sts/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/DangDangEat";
 pageContext.setAttribute("imgSrc", imgSrc);
 %>
 <!DOCTYPE html>
@@ -34,6 +35,11 @@ pageContext.setAttribute("imgSrc", imgSrc);
 <!-- jQuery Modal -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+<!-- 리뷰 이미지 슬라이드 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
 
 <script type="text/javascript">
 
@@ -184,8 +190,33 @@ pageContext.setAttribute("imgSrc", imgSrc);
 								if(jsonArray[index].review_real_files != null) {
 									result += "<td colspan='2'>" + jsonArray[index].review_content + "</td>";
 									result += "<td>";
-									result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
-											+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' />";
+									if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
+										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'"
+												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+	// 									result += "<a href='<c:out value="${imgSrc}" />/resources/img/sample1_thumb.png' data-title='' data-lightbox='review-img'>"
+												+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
+												+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
+									if(jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
+										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+										} else {
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+										}
+													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'"
+													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
+									if(jsonArray[index].review_real_files[2] != null && jsonArray[index].review_real_files[2] != "") {
+										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "" && jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+										} else {
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+										}
+													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'"
+													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
 									result += "</td>";
 									result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
 								} else {
@@ -197,8 +228,33 @@ pageContext.setAttribute("imgSrc", imgSrc);
 								if(jsonArray[index].review_real_files != null) {
 									result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
 									result += "<td>";
-									result += "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
-											+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' />";
+									if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
+										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'"
+												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+	// 									result += "<a href='<c:out value="${imgSrc}" />/resources/img/sample1_thumb.png' data-title='' data-lightbox='review-img'>"
+												+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
+												+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
+									if(jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
+										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+										} else {
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+										}
+													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'"
+													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
+									if(jsonArray[index].review_real_files[2] != null && jsonArray[index].review_real_files[2] != "") {
+										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "" && jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+										} else {
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+										}
+													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'"
+													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+									}
 									result += "</td>";
 								} else {
 									result += "<td colspan='4'>" + jsonArray[index].review_content + "</td>";
@@ -208,6 +264,10 @@ pageContext.setAttribute("imgSrc", imgSrc);
 						result += "</tr>";
 						
 						$("#review_table").append(result); // 뿌릴 내용 테이블 영역에 넣기
+						
+						// 리뷰 이미지 슬라이드
+// 						<a href="https://placekitten.com/408/287" data-title="열심히 한 작업!!" data-lightbox="example-set"><img src="https://placekitten.com/100/100" alt=""></a>
+// 						<a style="display:none;" href="https://placekitten.com/409/1487" data-title="열심히 한 작업!!22" data-lightbox="example-set"><img src="https://placekitten.com/100/99" alt=""></a>
 					}
 					
 					// 자바 스크립트 함수 파라미터 용 변수 선언(문자열)
@@ -271,7 +331,7 @@ pageContext.setAttribute("imgSrc", imgSrc);
   	});
 	
 	// ================================ 자바스크립트 jk 시작 =============================
-		
+	
 	$(document).on("click", ".review_subject_tr", function() {
 		
 		if($(this).next().is(":visible")) {
@@ -282,6 +342,13 @@ pageContext.setAttribute("imgSrc", imgSrc);
 		}
 		
 	});
+	
+	lightbox.option ({
+	    resizeDuration: 200,
+	    wrapAround: true,
+	    disableScrolling: false,
+	    fitImagesInViewport:false
+	})
 	
 	function confirmDelete(review_code) {
 		// confirm dialog 사용하여 "XXX 회원 기록을 삭제하시겠습니까?" 확인 요청
@@ -634,7 +701,6 @@ body {
 	<!-- Related items section-->
 	<!-- -------------------------- jakyoung 시작 ------------------------------------- -->
 	<!-- 리뷰 사진 모달 -->
-	
 		<div id="out_naga_modal" class="modal" data-backdrop="static">
 			<form class="">
 			
@@ -670,6 +736,8 @@ body {
 			
 		</div>
 	<!-- 리뷰 모달 끝 -->
+	
+	
 	
 	<!-- -------------------------- jakyoung 끝 ------------------------------------- -->
 	
