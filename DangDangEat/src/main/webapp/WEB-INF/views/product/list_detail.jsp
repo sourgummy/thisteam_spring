@@ -191,31 +191,34 @@ pageContext.setAttribute("imgSrc", imgSrc);
 									result += "<td colspan='2'>" + jsonArray[index].review_content + "</td>";
 									result += "<td>";
 									if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
-										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'"
-												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-	// 									result += "<a href='<c:out value="${imgSrc}" />/resources/img/sample1_thumb.png' data-title='' data-lightbox='review-img'>"
+										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'>"
+// 												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
 												+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
 												+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									if(jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
 										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
-											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'";
 										} else {
-											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'";
 										}
-													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'"
-													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+											result += "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									if(jsonArray[index].review_real_files[2] != null && jsonArray[index].review_real_files[2] != "") {
 										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "" && jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
-											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'";
 										} else {
-											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'";
 										}
-													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'"
-													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+											result += "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									result += "</td>";
 									result += "<td><button class='btn btn-danger btn-circle btn-sm' onclick='confirmDelete(" + strRc + ")'><i class='fas fa-trash'></i></button></td>";
@@ -229,31 +232,34 @@ pageContext.setAttribute("imgSrc", imgSrc);
 									result += "<td colspan='3'>" + jsonArray[index].review_content + "</td>"
 									result += "<td>";
 									if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
-										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'"
-												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-	// 									result += "<a href='<c:out value="${imgSrc}" />/resources/img/sample1_thumb.png' data-title='' data-lightbox='review-img'>"
+										result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "' data-title='' data-lightbox='review-img'>"
+// 												+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
 												+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[0] + "'"
 												+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									if(jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
 										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "") {
-											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'";
 										} else {
-											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'"
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img width='150' src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'";
 										}
-													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[1] + "'"
-													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+											result += "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									if(jsonArray[index].review_real_files[2] != null && jsonArray[index].review_real_files[2] != "") {
-										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "" && jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
-											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+										if(jsonArray[index].review_real_files[0] != null && jsonArray[index].review_real_files[0] != "" || jsonArray[index].review_real_files[1] != null && jsonArray[index].review_real_files[1] != "") {
+											result += "<a style='display:none;' href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'";
 										} else {
-											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'"
+											result += "<a href='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "' data-title='' data-lightbox='review-img'>"
+// 													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
+													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'";
 										}
-													+ " onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"'>"
-													+ "<img src='<c:out value="${imgSrc}" />/resources/upload/" + jsonArray[index].review_real_files[2] + "'"
-													+ "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
+											result += "alt='...' onerror='this.src=\"${pageContext.request.contextPath}/resources/img/sample1_thumb.png\"' /></a>";
 									}
 									result += "</td>";
 								} else {
