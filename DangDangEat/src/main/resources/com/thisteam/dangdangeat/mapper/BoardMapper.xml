@@ -211,6 +211,17 @@
   			)
 	</insert>
 	
+	<!-- 주문 상품 리뷰 작성 여부 확인 -->
+	<select id="selectOrderProductReview" resultType="com.thisteam.dangdangeat.vo.Order_product_review_viewVO">
+		SELECT *
+			FROM order_product_review_view
+			WHERE member_id = #{member_id}
+				AND pro_code = #{pro_code}
+				AND review_status = 0
+	</select>
+	
+	
+	
 	<!-- ======================== jakyoung 끝 ============================== -->
 
 </mapper>

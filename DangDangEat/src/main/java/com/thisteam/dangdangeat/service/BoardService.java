@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.thisteam.dangdangeat.mapper.BoardMapper;
 
 import com.thisteam.dangdangeat.vo.NoticeVO;
+import com.thisteam.dangdangeat.vo.Order_product_review_viewVO;
 import com.thisteam.dangdangeat.vo.QnaVO;
 import com.thisteam.dangdangeat.vo.ReviewVO;
 
@@ -72,15 +73,16 @@ public class BoardService {
 		return mapper.selectReviewListCount(pro_code, keyword);
 	}
 
-	// 주문 상품 중 리뷰 작성 여부 확인
-	public ReviewVO checkOrderProduct(String member_id, int pro_code) {
-		return mapper.selectProductReview(member_id, pro_code);
-	}
-
 	// 상품 리뷰 등록
 	public int registReview(ReviewVO review) {
 		return mapper.insertReview(review);
 	}
+
+	// 주문 상품 리뷰 작성 여부 확인
+	public List<Order_product_review_viewVO> checkReviewStatus(String member_id, int pro_code) {
+		return mapper.selectOrderProductReview(member_id, pro_code);
+	}
+
 
 	
 	// ======================== jakyoung 끝 ===================================

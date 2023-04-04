@@ -32,8 +32,11 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.mysql.cj.Session;
 
 import com.thisteam.dangdangeat.service.BoardService;
+import com.thisteam.dangdangeat.service.OrderService;
 import com.thisteam.dangdangeat.service.ProductService;
 import com.thisteam.dangdangeat.vo.NoticeVO;
+import com.thisteam.dangdangeat.vo.OrderProductVO;
+import com.thisteam.dangdangeat.vo.Order_product_review_viewVO;
 import com.thisteam.dangdangeat.vo.PageInfo;
 import com.thisteam.dangdangeat.vo.ProductVO;
 import com.thisteam.dangdangeat.vo.QnaVO;
@@ -47,7 +50,8 @@ public class BoardController {
 	private BoardService service;
 	@Autowired
 	private ProductService proService;
-	
+//	@Autowired
+//	private OrderService orderService;
 	
 	// ======================== sangwoo 시작 ===================================
 	// 공지 리스트
@@ -366,8 +370,8 @@ public class BoardController {
 	
 	// 리뷰 작성 권한 확인
 	@ResponseBody
-	@GetMapping(value = "checkOrderedProduct")
-	public void checkOrderedProduct(
+	@GetMapping(value = "CheckReviewAuth")
+	public void checkReviewAuth(
 			@RequestParam int pd
 			, Model model
 			, HttpSession session
@@ -379,12 +383,17 @@ public class BoardController {
 		if(id == null || id.equals("")) { // 세션 아이디가 null 이거나 "" 일 경우
 			model.addAttribute("result", "잘못된 접근입니다.");
 		} else { // 세션 아이디 있을 경우
-			// 주문 상품 중 리뷰 작성 여부 확인
-			ReviewVO review = service.checkOrderProduct(id, pd);
+			// 해당 상품 리뷰 작성 여부 확인
+			List<Order_product_review_viewVO> orderProductReviewList = service.checkReviewStatus(id, pd);
+			
+			if(orderProductReviewList == null) {
+				model.addAttribute("result", "작성 가능한 리뷰가 존재하지 않습니다.");
+			} else {
+				model.addAttribute("result", "true"); 
+			}
 			
 		}
 		
-		model.addAttribute("result", "true"); // 임시
 		
 	}
 	

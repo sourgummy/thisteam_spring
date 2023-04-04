@@ -7,6 +7,8 @@ public class OrderProductVO {
 	private int order_code;//   주문번호(fk)
 	private int pro_code; //    상품번호(fk)
 	private int order_stock; // 주문수량
+	private int review_status; // 리뷰 작성 여부
+	private int review_code; // 작성한 리뷰 코드
 	
 	public int getOrder_code() {
 		return order_code;
@@ -26,13 +28,22 @@ public class OrderProductVO {
 	public void setOrder_stock(int order_stock) {
 		this.order_stock = order_stock;
 	}
-	
+	public int getReview_status() {
+		return review_status;
+	}
+	public void setReview_status(int review_status) {
+		this.review_status = review_status;
+	}
+	public int getReview_code() {
+		return review_code;
+	}
+	public void setReview_code(int review_code) {
+		this.review_code = review_code;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("OrderProductVO [order_code=").append(order_code).append(", pro_code=").append(pro_code)
-				.append(", order_stock=").append(order_stock).append("]");
-		return builder.toString();
+		return "OrderProductVO [order_code=" + order_code + ", pro_code=" + pro_code + ", order_stock=" + order_stock
+				+ ", review_status=" + review_status + ", review_code=" + review_code + "]";
 	}
 	
 }

@@ -316,7 +316,7 @@ pageContext.setAttribute("imgSrc", imgSrc);
 			// 구매한 상품인지 확인
 // 			$.ajax({
 // 				type: "get",
-// 				url: "checkOrderedProduct?pd=" + ${product.pro_code},
+// 				url: "CheckReviewAuth?pd=" + ${product.pro_code},
 // 				dataType: "text" // 전송되는 데이터에 대한 타입 지정
 // 			})
 // 			.done(function(result) {
@@ -602,7 +602,7 @@ body {
 			</div>
 		</nav>
 	 </div>	
-	 <div id="resultArea" class="container px-4 px-lg-5 mt-3 content">
+	 <div id="resultArea" class="container px-4 px-lg-5 mt-3 content" style="margin-bottom: 1rem;">
 		 <%-- 리뷰,상품문의 게시판 보여주는곳 --%>
 		 <table id="review_table" class="table ">
 			<thead>

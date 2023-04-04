@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.thisteam.dangdangeat.vo.NoticeVO;
+import com.thisteam.dangdangeat.vo.Order_product_review_viewVO;
 import com.thisteam.dangdangeat.vo.QnaVO;
 import com.thisteam.dangdangeat.vo.ReviewVO;
 
@@ -52,13 +53,13 @@ public interface BoardMapper {
 			@Param("pro_code") int pro_code
 			, @Param("keyword") String keyword);
 
-	// 주문 상품 중 리뷰 작성 여부 확인
-	ReviewVO selectProductReview(
-			@Param("member_id") String member_id
-			, @Param("pro_code") int pro_code);
-
 	// 상품 리뷰 등록
 	int insertReview(ReviewVO review);
+
+	// 주문 상품 리뷰 작성 여부 확인
+	List<Order_product_review_viewVO> selectOrderProductReview(
+			@Param("member_id") String member_id
+			, @Param("member_id") int pro_code);
 
 	
 	// ======================== jakyoung 끝 ===================================
