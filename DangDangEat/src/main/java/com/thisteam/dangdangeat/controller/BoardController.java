@@ -370,30 +370,40 @@ public class BoardController {
 	
 	// 리뷰 작성 권한 확인
 	@ResponseBody
-	@GetMapping(value = "CheckReviewAuth")
-	public void checkReviewAuth(
-			@RequestParam int pd
+	@GetMapping(value = "CheckReviewAuth", produces = "application/text;charset=utf8")
+	public String checkReviewAuth(
+			@RequestParam int pro_code
 			, Model model
 			, HttpSession session
 			, HttpServletResponse response
 			) {
 		// 세션 아이디 확인
 		String id = (String)session.getAttribute("sId");
+		
+		// 반환할 결과
+		String result = "";
+//		List<Order_product_review_viewVO> orderProductReviewList = null;
 
 		if(id == null || id.equals("")) { // 세션 아이디가 null 이거나 "" 일 경우
-			model.addAttribute("result", "잘못된 접근입니다.");
+			result += "0";
+//			model.addAttribute("result", "잘못된 접근입니다.");
+			return result;
+			
 		} else { // 세션 아이디 있을 경우
 			// 해당 상품 리뷰 작성 여부 확인
-			List<Order_product_review_viewVO> orderProductReviewList = service.checkReviewStatus(id, pd);
+			List<Order_product_review_viewVO> orderProductReviewList = service.checkReviewStatus(id, pro_code);
+			System.out.println(orderProductReviewList);
 			
-			if(orderProductReviewList == null) {
-				model.addAttribute("result", "작성 가능한 리뷰가 존재하지 않습니다.");
+			if(orderProductReviewList == null || orderProductReviewList.isEmpty()) {
+				result += "1";
 			} else {
-				model.addAttribute("result", "true"); 
+				result += "true";
 			}
 			
+//			model.addAttribute("result", result);
+			return result;
+			
 		}
-		
 		
 	}
 	
@@ -415,12 +425,17 @@ public class BoardController {
 			
 			return "redirect";
 		} else { // 세션 아이디 있을 경우
+			
+			// 리뷰 작성 가능한 상품 구매 내역 조회
+			List<Order_product_review_viewVO> orderProductReviewList = service.checkReviewStatus(id, pro_code);
+			
 			// Service 객체의 getProductDetail() 메서드를 호출하여 게시물 상세 정보 조회
 			// => 파라미터 : 상품번호  리턴타입 : ProductVO(product)
 			ProductVO product = proService.getProductDetail(pro_code);
 			
-			// Model 객체에 ProductVO 객체 추가
+			// Model 객체에 ProductVO 객체, List<Order_product_review_viewVO> 객체 추가
 			model.addAttribute("product", product);
+			model.addAttribute("productReviewList", orderProductReviewList);
 			
 			return "board/review_write_form";
 		}

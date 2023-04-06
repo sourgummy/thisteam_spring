@@ -314,21 +314,23 @@ pageContext.setAttribute("imgSrc", imgSrc);
 		// 리뷰 작성 버튼
 		$("#reviewWriteBtn").on("click", function() {
 			// 구매한 상품인지 확인
-// 			$.ajax({
-// 				type: "get",
-// 				url: "CheckReviewAuth?pd=" + ${product.pro_code},
-// 				dataType: "text" // 전송되는 데이터에 대한 타입 지정
-// 			})
-// 			.done(function(result) {
-				
-// 				// 리뷰 작성 가능할 경우
-// 				if(result == "true") {
+			$.ajax({
+				type: "get",
+				url: "CheckReviewAuth?pro_code=" + ${product.pro_code},
+				dataType: "script" // 전송되는 데이터에 대한 타입 지정
+			})
+			.done(function(result) {
+				if(result == "true") {
 					window.open("ReviewWrite?pro_code=" + ${product.pro_code}, "_blank", "width=880, height=600, top=50, left=1000");
-// 				}
-// 			})
-// 			.fail(function() {
+				} else if(result == "0") { // 세션 아이디 X
+					alert("잘못된 접근입니다.");
+				} else if(result == "1") { // 상품 리뷰 작성 권한 X
+					alert("작성 가능한 리뷰가 존재하지 않습니다.");
+				}
+			})
+			.fail(function() {
 				
-// 			});
+			});
 			
 		});
 

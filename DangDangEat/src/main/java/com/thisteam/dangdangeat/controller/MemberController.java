@@ -211,6 +211,12 @@ public class MemberController {
 		return "member/login"; // login.jsp 로 포워딩
 	}
 
+	// 네이버 로그인 페이지
+	@GetMapping(value = "/NaverLoginForm")
+	public String naverLogin() {
+		return "member/naver_login"; // naver_login.jsp 로 포워딩
+	}
+
 	// 로그인 프로
 	@PostMapping(value = "/MemberLoginPro")
 	public String loginPro(@ModelAttribute MemberVO member, Model model, HttpSession session) {

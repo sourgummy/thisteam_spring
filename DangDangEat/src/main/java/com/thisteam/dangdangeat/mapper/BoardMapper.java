@@ -59,7 +59,7 @@ public interface BoardMapper {
 	// 주문 상품 리뷰 작성 여부 확인
 	List<Order_product_review_viewVO> selectOrderProductReview(
 			@Param("member_id") String member_id
-			, @Param("member_id") int pro_code);
+			, @Param("pro_code") int pro_code);
 
 	
 	// ======================== jakyoung 끝 ===================================

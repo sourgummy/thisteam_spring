@@ -150,7 +150,7 @@
                             </div>
                             <div class="card-body card-block">
                                 <form action="ReviewWritePro" method="post" class="form-horizontal"  enctype="multipart/form-data">
-                                	<input type="hidden" name="pro_code" value="${product.pro_code }"> <!-- 기존 거래처 코드 (UPDATE 구문 시 필요) -->
+                                	<input type="hidden" name="pro_code" value="${product.pro_code }"> <!-- 상품 코드 -->
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="pro_name" class=" form-control-label font-weight-bold">상품명</label></div>
                                         <div class="col-12 col-md-9">
