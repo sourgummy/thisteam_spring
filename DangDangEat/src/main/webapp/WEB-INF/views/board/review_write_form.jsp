@@ -158,13 +158,22 @@
 														alt="..." onerror="this.src='${pageContext.request.contextPath}/resources/img/sample1_thumb.png';" 
 														/>
                                         	<span class="form-control-static bg-gradient-light " id="pro_name">${product.pro_name }
-                                        	<small class="form-text text-muted">선택 옵션 : 
-                                        		<c:choose>
-                                        			<c:when test="${product.pro_option eq 1 }">강아지용</c:when>
-                                        			<c:when test="${product.pro_option eq 2 }">고양이용</c:when>
-                                        			<c:when test="${product.pro_option eq 3 }">사람용</c:when>
-                                        			<c:when test="${product.pro_option eq 4 }">호랑이용</c:when>
-                                        		</c:choose>
+                                        	<small class="form-text text-muted">
+                                        		작성 가능한 리뷰 <br>
+                                        		<c:forEach var="productReview" items="${productReviewList }">
+                                        			<input type="radio" name="order_code" required="required" checked="checked" value="${productReview.pay_number }">
+                                        		주문 번호 : ${productReview.pay_number }
+                                        		 | 구매 날짜 :
+                                        			${productReview.order_date }
+                                        		 | 선택 옵션 : 
+	                                        		<c:choose>
+	                                        			<c:when test="${product.pro_option eq 1 }">강아지용</c:when>
+	                                        			<c:when test="${product.pro_option eq 2 }">고양이용</c:when>
+	                                        			<c:when test="${product.pro_option eq 3 }">사람용</c:when>
+	                                        			<c:when test="${product.pro_option eq 4 }">호랑이용</c:when>
+	                                        		</c:choose>
+                                        		 | 선택 수량 : ${productReview.order_stock } <br>
+                                        		 </c:forEach>
                                         	</small></span>
                                         </div>
                                     </div>

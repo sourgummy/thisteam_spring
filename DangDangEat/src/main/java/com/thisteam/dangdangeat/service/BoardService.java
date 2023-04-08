@@ -83,6 +83,11 @@ public class BoardService {
 		return mapper.selectOrderProductReview(member_id, pro_code);
 	}
 
+	// 주문 상품 리뷰 작성 상태 수정
+	public int updateReviewStatus(ReviewVO review, Order_product_review_viewVO oprView) {
+		return mapper.updateReviewStatus(review, oprView);
+	}
+
 
 	
 	// ======================== jakyoung 끝 ===================================

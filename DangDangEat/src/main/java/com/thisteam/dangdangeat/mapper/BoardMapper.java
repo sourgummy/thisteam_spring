@@ -61,6 +61,11 @@ public interface BoardMapper {
 			@Param("member_id") String member_id
 			, @Param("pro_code") int pro_code);
 
+	// 주문 상품 리뷰 작성 상태 수정
+	int updateReviewStatus(
+			@Param("review") ReviewVO review
+			, @Param("oprView") Order_product_review_viewVO oprView);
+
 	
 	// ======================== jakyoung 끝 ===================================
 

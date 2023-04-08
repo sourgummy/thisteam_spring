@@ -220,6 +220,22 @@
 				AND review_status = 0
 	</select>
 	
+	<!-- 주문 상품 리뷰 작성 상태 수정 -->
+	<update id="updateReviewStatus">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+  			SELECT MAX(review_code)
+  				FROM review
+  				WHERE member_id = #{review.member_id}
+  					AND pro_code = #{review.pro_code}
+  		</selectKey>
+  		UPDATE order_product_review_view
+  			SET review_status = 1
+  				, review_code = #{review_code}
+  			WHERE member_id = #{review.member_id}
+  				AND pay_number = #{oprView.pay_number}
+  				AND pro_code = #{review.pro_code}
+	</update>
+	
 	
 	
 	<!-- ======================== jakyoung 끝 ============================== -->

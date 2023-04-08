@@ -446,6 +446,7 @@ public class BoardController {
 	@PostMapping(value = "ReviewWritePro")
 	public String reviewWritePro(
 			@ModelAttribute ReviewVO review
+			, @ModelAttribute Order_product_review_viewVO oprView
 			, Model model
 			, HttpSession session
 			, HttpServletResponse response
@@ -532,8 +533,16 @@ public class BoardController {
 			int insertCount = service.registReview(review);
 			
 			if(insertCount > 0) { // 등록 성공
-				model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
-				model.addAttribute("url", "/ProductDetail.pd?pro_code=" + review.getPro_code());
+				// Order_product_review_view 리뷰 정보 등록
+				int updateCount = service.updateReviewStatus(review, oprView);
+				
+				if(updateCount > 0) {
+					model.addAttribute("msg", "리뷰가 성공적으로 등록되었습니다.");
+					model.addAttribute("url", "/ProductDetail.pd?pro_code=" + review.getPro_code());
+				} else {
+					model.addAttribute("msg", "리뷰 등록에 실패하였습니다.");
+					return "fail_back";
+				}
 				
 				return "redirect";
 			} else { // 등록 실패
