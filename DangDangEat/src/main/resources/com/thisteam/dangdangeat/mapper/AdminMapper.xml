@@ -38,6 +38,13 @@
   			WHERE review_code = #{review_code}
   	</delete>
     
+    <!-- 리뷰 삭제에 따른 리뷰 상태 수정 -->
+    <update id="updateReviewStatus">
+    	UPDATE order_product
+    		SET review_status = 0
+    		WHERE review_code = #{review_code}
+    </update>
+    
       	<!-- ============================================== yeram ================================================ -->
   	<!-- Wish Top -->
   	<select id="selectWishlistTop" resultType="com.thisteam.dangdangeat.vo.WishlistVO">

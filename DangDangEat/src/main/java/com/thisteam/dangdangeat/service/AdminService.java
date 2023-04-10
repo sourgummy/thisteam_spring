@@ -45,6 +45,11 @@ public class AdminService {
 		return mapper.deleteReview(review);
 	}
 	
+	// 리뷰 상태 수정
+	public int updateReviewStatus(ReviewVO review) {
+		return mapper.updateReviewStatus(review);
+	}
+	
   // ============================================== yeram ================================================
 	// Wish Top
 	public List<WishlistVO> getWishlistTop() {
@@ -125,6 +130,8 @@ public class AdminService {
 	public List<AdminOrderListVO> getOrderList() {
 		return mapper.selectOrderList();
 	}
+
+
 
 
 

@@ -284,7 +284,9 @@ public class AdminController {
 			String realFile = service.getRealFile(review_code);
 //	        System.out.println(realFile);
 
-			// 리뷰 삭제 수행
+			// order_product 테이블 리뷰 상태 수정 및 리뷰 삭제
+			int updateCount = 0;
+			updateCount = service.updateReviewStatus(review);
 			int deleteCount = 0;
 			deleteCount = service.reviewDelete(review);
 

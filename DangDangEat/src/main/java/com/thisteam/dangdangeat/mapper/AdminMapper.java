@@ -28,6 +28,9 @@ public interface AdminMapper {
 	// 리뷰 삭제
 	int deleteReview(ReviewVO review);
 	
+	// 리뷰 상태 수정
+	int updateReviewStatus(ReviewVO review);
+	
 	// ============================================== yeram ================================================
 	// Wish Top
 	List<WishlistVO> selectWishlistTop();
@@ -75,6 +78,8 @@ public interface AdminMapper {
 	
 	// 관리자 - 주문 관리 페이지
 	List<AdminOrderListVO> selectOrderList();
+
+
 
 
 
