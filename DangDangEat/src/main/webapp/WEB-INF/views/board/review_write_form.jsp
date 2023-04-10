@@ -161,7 +161,7 @@
                                         	<small class="form-text text-muted">
                                         		작성 가능한 리뷰 <br>
                                         		<c:forEach var="productReview" items="${productReviewList }">
-                                        			<input type="radio" name="order_code" required="required" checked="checked" value="${productReview.pay_number }">
+                                        			<input type="radio" name="pay_number" required="required" checked="checked" value="${productReview.pay_number }">
                                         		주문 번호 : ${productReview.pay_number }
                                         		 | 구매 날짜 :
                                         			${productReview.order_date }

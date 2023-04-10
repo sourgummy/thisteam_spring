@@ -469,6 +469,7 @@ public class BoardController {
 			String saveDir = session.getServletContext().getRealPath(uploadDir); //실제 업로드 위치 설정
 			System.out.println("실제 업로드 경로 : " + saveDir);
 			System.out.println("리뷰 vo :" + review);
+			System.out.println("상품 리뷰 뷰 vo :" + oprView);
 			
 			// -------------- java.nio 패키지(Files, Path, Paths) 객체 활용 ---------------------------
 			Path path = Paths.get(saveDir); // 실제 업로드 경로 지정

@@ -228,12 +228,15 @@
   				WHERE member_id = #{review.member_id}
   					AND pro_code = #{review.pro_code}
   		</selectKey>
-  		UPDATE order_product_review_view
-  			SET review_status = 1
-  				, review_code = #{review_code}
-  			WHERE member_id = #{review.member_id}
-  				AND pay_number = #{oprView.pay_number}
-  				AND pro_code = #{review.pro_code}
+  		UPDATE order_product 
+			SET review_status = 1 
+				, review_code = #{review_code} 
+    		WHERE 
+				order_code = (SELECT order_code 
+								FROM admin_order_list_view
+		                        WHERE member_id = #{review.member_id}
+									and pay_number = #{oprView.pay_number})
+				AND pro_code = #{review.pro_code};
 	</update>
 	
 	
