@@ -243,6 +243,11 @@ public class MemberController {
 		//		return "";
 	}
 
+//	@PostMapping("/social-login")
+//	public ResponseEntity<LoginResponse> doSocialLogin(@RequestBody @Valid SocialLoginRequest request) {
+//		return ResponseEntity.created(URI.create("/social-login")).body(userService.doSocialLogin(request));
+//    }
+	
 	// 로그아웃
 	@GetMapping(value = "/MemberLogout")
 	public String logout(HttpSession session) {

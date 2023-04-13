@@ -16,14 +16,17 @@
 <title>DangDangEAT - Login</title>
 
 <!-- Custom fonts for this template-->
-<link href="${pageContext.request.contextPath}/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template-->
-<link href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin-2.min.css"
+	rel="stylesheet">
 
 <style type="text/css">
 @font-face {
@@ -41,8 +44,13 @@ body {
 </style>
 <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 <!-- 네아로 SDK -->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<!-- 카카오 로그인 API -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
@@ -116,6 +124,42 @@ body {
 // 	naver_id_login.setState(state);
 // 	naver_id_login.setPopup();
 // 	naver_id_login.init_naver_id_login();
+
+	// 카카오 로그인 
+	window.Kakao.init('8dbab77ba0e3d0dac16b1404a1556ecc');
+
+	function kakaoLogin() {
+	    window.Kakao.Auth.login({
+	        scope: 'account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+	        success: function(response) {
+	            console.log(response) // 로그인 성공하면 받아오는 데이터
+	            window.Kakao.API.request({ // 사용자 정보 가져오기 
+	                url: '/v2/user/me',
+	                success: (res) => {
+	                    const kakao_account = res.kakao_account;
+	                    console.log(kakao_account)
+	                }
+	            });
+	            window.location.href='/dangdangeat' //리다이렉트 되는 코드
+	        },
+	        fail: function(error) {
+	            console.log(error);
+	        }
+	    });
+	}
+	
+	window.Kakao.init('8dbab77ba0e3d0dac16b1404a1556ecc');
+	   function kakaoLogout() {
+	       if (!Kakao.Auth.getAccessToken()) {
+	          console.log('Not logged in.');
+	          return;
+	       }
+	       Kakao.Auth.logout(function(response) {
+	          alert(response +' logout');
+	          window.location.href='/'
+	       });
+	};
+
 </script>
 </head>
 
@@ -166,15 +210,18 @@ body {
 									<hr>
 									<!-- 네이버 로그인 버튼 노출 영역 -->
 									<div id="naver_id_login"></div>
+									<!-- 카카오 로그인 버튼 노출 영역 -->
+									<a id="kakao-login-btn" href="javascript:kakaoLogin()">
+										<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼" />
+									</a>
+									<p id="token-result"></p>
 									<hr>
 									<div class="text-center">
 										<a class="small" href="MemberFindIdForm">Forgot Id?</a> | <a
-											class="small" href="MemberFindPassForm">Forgot
-											Password?</a>
+											class="small" href="MemberFindPassForm">Forgot Password?</a>
 									</div>
 									<div class="text-center">
-										<a class="small" href="MemberJoinForm">Create an
-											Account!</a>
+										<a class="small" href="MemberJoinForm">Create an Account!</a>
 									</div>
 								</div>
 							</div>
@@ -197,14 +244,18 @@ body {
 	</footer>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/sb-admin-2.min.js"></script>
 
 </body>
 
