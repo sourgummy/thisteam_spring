@@ -150,21 +150,36 @@
                             </div>
                             <div class="card-body card-block">
                                 <form action="ReviewWritePro" method="post" class="form-horizontal"  enctype="multipart/form-data">
-                                	<input type="hidden" name="pro_code" value="${product.pro_code }"> <!-- 기존 거래처 코드 (UPDATE 구문 시 필요) -->
+                                	<input type="hidden" name="pro_code" value="${product.pro_code }"> <!-- 상품 코드 -->
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="pro_name" class=" form-control-label font-weight-bold">상품명</label></div>
-                                        <div class="col-12 col-md-9"><span class="form-control-static bg-gradient-light" id="pro_name">${product.pro_name }</span></div>
+                                        <div class="col-12 col-md-9">
+                                        	<img width="150" src="<%=request.getScheme()+"://"+request.getServerName() + ":" + request.getServerPort() +"/"+request.getContextPath()%>/resources/upload/${product.pro_real_thumb  }"
+														alt="..." onerror="this.src='${pageContext.request.contextPath}/resources/img/sample1_thumb.png';" 
+														/>
+                                        	<span class="form-control-static bg-gradient-light " id="pro_name">${product.pro_name }
+                                        	<small class="form-text text-muted">
+                                        		작성 가능한 리뷰 <br>
+                                        		<c:forEach var="productReview" items="${productReviewList }">
+                                        			<input type="radio" name="pay_number" required="required" checked="checked" value="${productReview.pay_number }">
+                                        		주문 번호 : ${productReview.pay_number }
+                                        		 | 구매 날짜 :
+                                        			${productReview.order_date }
+                                        		 | 선택 옵션 : 
+	                                        		<c:choose>
+	                                        			<c:when test="${product.pro_option eq 1 }">강아지용</c:when>
+	                                        			<c:when test="${product.pro_option eq 2 }">고양이용</c:when>
+	                                        			<c:when test="${product.pro_option eq 3 }">사람용</c:when>
+	                                        			<c:when test="${product.pro_option eq 4 }">호랑이용</c:when>
+	                                        		</c:choose>
+                                        		 | 선택 수량 : ${productReview.order_stock } <br>
+                                        		 </c:forEach>
+                                        	</small></span>
+                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="review_subject" class=" form-control-label font-weight-bold">상품평 제목<font style="color: red;">*</font></label></div>
                                         <div class="col-12 col-md-9"><input type="text" id="review_subject" name="review_subject" class="form-control" required="required"><small class="form-text text-muted"></small></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3"><label for="review_pass" class=" form-control-label font-weight-bold">비밀번호<font style="color: red;">*</font></label></div>
-                                        <div class="col col-md-9">
-                                          <input type="password" name="review_pass" class="form-control" required="required">
-                                          <small class="help-block form-text text-muted"></small>
-                                        </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="review_content" class=" form-control-label font-weight-bold">상품평 내용<font style="color: red;">*</font></label></div>
@@ -172,8 +187,12 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3"><label for="files" class=" form-control-label font-weight-bold">상품 사진</label></div>
-                                        <div class="col col-md-9">
+                                        <div class="col col-md-9 addFile">
                                             <input type="file" name="files" />
+                                            <input type="file" name="files" />
+                                            <input type="file" name="files" />
+<!--                                             <button class="addFileBtn">사진 추가하기</button> -->
+                                            <small class="form-text text-muted">상품평 사진은 3개까지 추가 가능합니다.</small>
                                         </div>
                                     </div>
                             <div class="card-footer">
@@ -196,6 +215,7 @@
 
        		 </div><!-- .animated -->
     	</div><!-- .content -->
+    </div>
 
     <div class="clearfix"></div>
 
@@ -208,16 +228,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-
-<script>
-    jQuery(document).ready(function() {
-        jQuery(".standardSelect").chosen({
-            disable_search_threshold: 10,
-            no_results_text: "Oops, nothing found!",
-            width: "100%"
-        });
-    });
-</script>
 
 </body>
 </html>

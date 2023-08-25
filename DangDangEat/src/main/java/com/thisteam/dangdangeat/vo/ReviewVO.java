@@ -1,6 +1,7 @@
 package com.thisteam.dangdangeat.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,7 @@ public class ReviewVO {
 
 	private int review_code;
 	private String member_id;
-	private String review_pass;
+//	private String review_pass; // 리뷰 비밀번호 삭제
 	private String review_subject;
 	private String review_content;
 	private String review_file;
@@ -37,6 +38,7 @@ public class ReviewVO {
 	private int pro_code;
 	
 	private MultipartFile[] files;
+	private String[] review_real_files;
 	
 	private OrdersBeanVO OrdersBeanVO;
 	private OrderProductVO OrderProductVO;
@@ -53,12 +55,12 @@ public class ReviewVO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public String getReview_pass() {
-		return review_pass;
-	}
-	public void setReview_pass(String review_pass) {
-		this.review_pass = review_pass;
-	}
+//	public String getReview_pass() {
+//		return review_pass;
+//	}
+//	public void setReview_pass(String review_pass) {
+//		this.review_pass = review_pass;
+//	}
 	public String getReview_subject() {
 		return review_subject;
 	}
@@ -126,6 +128,12 @@ public class ReviewVO {
 	public void setFiles(MultipartFile[] files) {
 		this.files = files;
 	}
+	public String[] getReview_real_files() {
+		return review_real_files;
+	}
+	public void setReview_real_files(String[] review_real_files) {
+		this.review_real_files = review_real_files;
+	}
 	public OrdersBeanVO getOrdersBeanVO() {
 		return OrdersBeanVO;
 	}
@@ -141,12 +149,13 @@ public class ReviewVO {
 	
 	@Override
 	public String toString() {
-		return "ReviewVO [review_code=" + review_code + ", member_id=" + member_id + ", review_pass=" + review_pass
-				+ ", review_subject=" + review_subject + ", review_content=" + review_content + ", review_file="
-				+ review_file + ", review_real_file=" + review_real_file + ", review_re_ref=" + review_re_ref
-				+ ", review_re_lev=" + review_re_lev + ", review_re_seq=" + review_re_seq + ", review_readcount="
-				+ review_readcount + ", review_date=" + review_date + ", pro_code=" + pro_code + ", OrdersBeanVO="
-				+ OrdersBeanVO + ", OrderProductVO=" + OrderProductVO + "]";
+		return "ReviewVO [review_code=" + review_code + ", member_id=" + member_id + ", review_subject="
+				+ review_subject + ", review_content=" + review_content + ", review_file=" + review_file
+				+ ", review_real_file=" + review_real_file + ", review_re_ref=" + review_re_ref + ", review_re_lev="
+				+ review_re_lev + ", review_re_seq=" + review_re_seq + ", review_readcount=" + review_readcount
+				+ ", review_date=" + review_date + ", pro_code=" + pro_code + ", files=" + Arrays.toString(files)
+				+ ", review_real_files=" + Arrays.toString(review_real_files) + ", OrdersBeanVO=" + OrdersBeanVO
+				+ ", OrderProductVO=" + OrderProductVO + "]";
 	}
 	
 }

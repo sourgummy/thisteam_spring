@@ -23,12 +23,27 @@
   			WHERE member_id = #{member_id}
   	</delete>
 
+	<!-- 리뷰 파일 조회 -->
+	<select id="selectRealFile" resultType="string">
+      SELECT review_real_file
+         FROM review
+         WHERE
+            review_code = #{review_code}
+   </select>
+
   	<!-- 관리자 리뷰 삭제 -->
   	<delete id="deleteReview">
   		DELETE
   			FROM review
   			WHERE review_code = #{review_code}
   	</delete>
+    
+    <!-- 리뷰 삭제에 따른 리뷰 상태 수정 -->
+    <update id="updateReviewStatus">
+    	UPDATE order_product
+    		SET review_status = 0
+    		WHERE review_code = #{review_code}
+    </update>
     
       	<!-- ============================================== yeram ================================================ -->
   	<!-- Wish Top -->

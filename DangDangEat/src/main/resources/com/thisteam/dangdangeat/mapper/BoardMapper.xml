@@ -197,7 +197,7 @@
 					</otherwise>
 				</choose>
 				, #{member_id}
-				, #{review_pass}
+<!-- 				, #{review_pass} -->
 				, #{review_subject}
 				, #{review_content}
 				, #{review_file}
@@ -210,6 +210,36 @@
 				, #{pro_code}
   			)
 	</insert>
+	
+	<!-- 주문 상품 리뷰 작성 여부 확인 -->
+	<select id="selectOrderProductReview" resultType="com.thisteam.dangdangeat.vo.Order_product_review_viewVO">
+		SELECT *
+			FROM order_product_review_view
+			WHERE member_id = #{member_id}
+				AND pro_code = #{pro_code}
+				AND review_status = 0
+	</select>
+	
+	<!-- 주문 상품 리뷰 작성 상태 수정 -->
+	<update id="updateReviewStatus">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+  			SELECT MAX(review_code)
+  				FROM review
+  				WHERE member_id = #{review.member_id}
+  					AND pro_code = #{review.pro_code}
+  		</selectKey>
+  		UPDATE order_product 
+			SET review_status = 1 
+				, review_code = #{review_code} 
+    		WHERE 
+				order_code = (SELECT order_code 
+								FROM admin_order_list_view
+		                        WHERE member_id = #{review.member_id}
+									and pay_number = #{oprView.pay_number})
+				AND pro_code = #{review.pro_code};
+	</update>
+	
+	
 	
 	<!-- ======================== jakyoung 끝 ============================== -->
 
