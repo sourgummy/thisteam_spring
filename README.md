@@ -4,7 +4,7 @@
     <br>
     <div align= "center"> 
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> DANGDANGEAT ver.2 </h2>  
-    <div style="font-weight: 700; font-size: 15px; text-align: center; color: #282d33;"> <li> 반려동물 사료 쇼핑몰 '댕댕잇'</li><li> 개발 기간 : 2022.12 ~ 2023.01</li> </div> 
+    <div style="font-weight: 700; font-size: 15px; text-align: center; color: #282d33;"> <li> 반려동물 사료 쇼핑몰 '댕댕잇'</li><li> 개발 기간 : 2023.02 ~ 2023.03</li> </div> 
     </div>
     <br>
     <div align= "center">
@@ -45,7 +45,7 @@
 | :------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | 
 |   <img width="160px" src="https://github.com/sourgummy/muhansangsa/blob/main/MuhanSangsa/src/main/webapp/resources/images/mijoo_profile.png" />    |                      <img width="160px" src="https://github.com/sourgummy/muhansangsa/blob/main/MuhanSangsa/src/main/webapp/resources/images/jakyoung_profile.png" />    |                   <img width="160px" src="https://github.com/sourgummy/muhansangsa/blob/main/MuhanSangsa/src/main/webapp/resources/images/yeram_profile.png"/>   |
 |   [@codebymiju](https://github.com/codebymiju) <br> <a href="mailto:miju.kim.kr@gmail.com"><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=miju.kim.kr@gmail.com"/></a>  |    [@chz5kjk0](https://github.com/chz5kjk0) <br> <a href="mailto:chz5kjk0@gmail.com"><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=chz5kjk0@gmail.com"/></a>  | [@sourgummy](https://github.com/s) <br> <a href="mailto:creamy.9416@gmail.com"><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=creamy.9416@gmail.com"/></a>  |
-| 팀장 <br> 주문 페이지 <br> 결제 페이지 | 로그인, ID/PW 찾기 <br> 회원정보 수정 <br> 회원 관리 <br> 마이페이지 | 깃허브 총괄 <br> 장바구니 구현 <br> 위시리스트 구현 <br> 관리자 메인 페이지 |
+| 주문 페이지 <br> 결제 페이지 | 로그인, ID/PW 찾기 <br> 회원정보 수정 <br> 회원 관리 <br> 마이페이지 | 깃허브 총괄 <br> 장바구니 구현 <br> 위시리스트 구현 <br> 관리자 메인 페이지 |
 
 
 
